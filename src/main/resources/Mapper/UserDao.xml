@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hantao.mapper.UserMapper">
+    <resultMap id="ResultMap" type="com.hantao.pojo.User">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, avatar, create_time, email, nickname, password, type, update_time, username
+    </sql>
+    <select id="SelectByNameAndPassword" resultMap="ResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from blog.user
+        where username = #{username} and password = #{password}
+    </select>
+</mapper>

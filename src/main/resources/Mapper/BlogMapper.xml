@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hantao.mapper.BlogMapper">
+    <resultMap id="ResultMap" type="com.hantao.pojo.Blog">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="TIMESTAMP" property="content" />
+        <result column="fire_picture" jdbcType="VARCHAR" property="firePicture" />
+        <result column="flag" jdbcType="VARCHAR" property="flag" />
+        <result column="views" jdbcType="INTEGER" property="views" />
+        <result column="appreciation" jdbcType="BOOLEAN" property="appreciation" />
+        <result column="share_statement" jdbcType="BOOLEAN" property="shareStatement" />
+        <result column="published" jdbcType="BOOLEAN" property="published" />
+        <result column="commentabled" javaType="BOOLEAN" property="commentabled"/>
+        <result column="recommend" javaType="BOOLEAN" property="recommend"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="creatTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="type_id" jdbcType="BIGINT" property="type"/>
+    </resultMap>
+
+
+    <resultMap extends="ResultMap" id="ResultMapWithBlog" type="com.hantao.pojo.Type">
+
+
+        <!--关联type-->
+        <association property="blogs" javaType="com.hantao.pojo.Type" resultMap="com.hantao.pojo.Type">
+            <id column="typeId" jdbcType="BIGINT" property="id"/>
+            <result column="typeName" jdbcType="VARCHAR" property="name"/>
+        </association>
+    </resultMap>
+    <insert id="insertBlog"></insert>
+    <update id="updateBlog"></update>
+    <select id="selectByName" resultType="com.hantao.pojo.Tag"></select>
+    <select id="selectById" resultType="com.hantao.pojo.Tag"></select>
+    <select id="selectAll" resultType="com.hantao.pojo.Blog"></select>
+    <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultType="ResultMap">
+        SELECT
+        b.*,t.name typeName
+        from blog b, type t
+        where b.type_id=t.id
+        <if test="title!=null and title!='' ">
+            and title LIKE concat(concat('%',#{title,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="typeId!=null">
+            and type_id LIKE concat(concat('%',#{type,jdbcType=BIGINT}),'%')
+        </if>
+        <if test="recommend==true">
+            and recommend=#{recommend,jdbcType=BIT}
+        </if>
+    </select>
+</mapper>
