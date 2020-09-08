@@ -2,6 +2,7 @@ package com.hantao.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hantao.pojo.Blog;
+import com.hantao.pojo.vo.BlogQuery;
 
 import java.util.List;
 
@@ -29,5 +30,5 @@ public interface BlogService {
     void deleteBlog(Long id);
 
 
-    PageInfo<Blog> finaAllUserByPage(int pageNum, int size);
+    PageInfo<Blog> finaAllUserByPage(BlogQuery blog, int pageNum, int size);
 }

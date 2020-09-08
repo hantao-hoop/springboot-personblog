@@ -29,5 +29,5 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     List<Blog> selectAll();
 
-    Tag selectByTitleAndTypeAndId(BlogQuery blogQuery);
+    List<Blog> selectByTitleAndTypeAndId(BlogQuery blogQuery);
 }

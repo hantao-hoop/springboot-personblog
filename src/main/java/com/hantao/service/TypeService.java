@@ -22,6 +22,9 @@ public interface TypeService{
     //根据id查询类型
     Type selectById(Long id);
 
+    //根据id查询类型
+    List<Type> selectList();
+
     //根据类型名查询
     Type selectByName(String name);
 

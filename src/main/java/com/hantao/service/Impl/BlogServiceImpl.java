@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hantao.mapper.BlogMapper;
 import com.hantao.pojo.Blog;
+import com.hantao.pojo.Tag;
+import com.hantao.pojo.vo.BlogQuery;
 import com.hantao.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,10 +49,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public PageInfo<Blog> finaAllUserByPage(int pageNum, int size) {
+    public PageInfo<Blog> finaAllUserByPage(BlogQuery blog, int pageNum, int size) {
 
         PageHelper.startPage(pageNum,size);
-        List<Blog> blogs = blogMapper.selectAll();
-        return null;
+        List<Blog> blogs = blogMapper.selectByTitleAndTypeAndId(blog);
+        PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
+        return pageInfo;
     }
 }

@@ -15,25 +15,36 @@
         <result column="recommend" javaType="BOOLEAN" property="recommend"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="creatTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="type_id" jdbcType="BIGINT" property="type"/>
+        <result column="type_id" jdbcType="BIGINT" property="typeId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
     </resultMap>
 
 
-    <resultMap extends="ResultMap" id="ResultMapWithBlog" type="com.hantao.pojo.Type">
+    <resultMap extends="ResultMap" id="ResultMapWithBlog" type="com.hantao.pojo.Blog">
+
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
 
 
         <!--关联type-->
-        <association property="blogs" javaType="com.hantao.pojo.Type" resultMap="com.hantao.pojo.Type">
+        <association property="type" javaType="com.hantao.pojo.Type">
             <id column="typeId" jdbcType="BIGINT" property="id"/>
             <result column="typeName" jdbcType="VARCHAR" property="name"/>
         </association>
+
+        <!--关联user-->
+        <association property="user" javaType="com.hantao.pojo.User">
+            <result column="Uavatar" jdbcType="VARCHAR" property="avatar"/>
+            <result column="Unickname" jdbcType="VARCHAR" property="nickname"/>
+        </association>
+
     </resultMap>
+
     <insert id="insertBlog"></insert>
     <update id="updateBlog"></update>
     <select id="selectByName" resultType="com.hantao.pojo.Tag"></select>
     <select id="selectById" resultType="com.hantao.pojo.Tag"></select>
     <select id="selectAll" resultType="com.hantao.pojo.Blog"></select>
-    <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultType="ResultMap">
+    <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultType="com.hantao.pojo.Blog">
         SELECT
         b.*,t.name typeName
         from blog b, type t

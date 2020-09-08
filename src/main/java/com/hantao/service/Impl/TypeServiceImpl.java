@@ -49,6 +49,11 @@ public class TypeServiceImpl implements TypeService{
         return typeMapper.selectById(id);
     }
 
+    @Override
+    public List<Type> selectList() {
+        return typeMapper.selectAll();
+    }
+
 
     @Transactional
     @Override
