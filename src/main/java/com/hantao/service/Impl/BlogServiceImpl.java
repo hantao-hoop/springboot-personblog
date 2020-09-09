@@ -52,6 +52,7 @@ public class BlogServiceImpl implements BlogService {
     public PageInfo<Blog> finaAllUserByPage(BlogQuery blog, int pageNum, int size) {
 
         PageHelper.startPage(pageNum,size);
+        System.out.println(blog);
         List<Blog> blogs = blogMapper.selectByTitleAndTypeAndId(blog);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogs);
         return pageInfo;

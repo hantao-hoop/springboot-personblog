@@ -6,6 +6,7 @@ import com.hantao.pojo.Tag;
 import com.hantao.pojo.Type;
 import com.hantao.pojo.vo.BlogQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,5 +30,5 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     List<Blog> selectAll();
 
-    List<Blog> selectByTitleAndTypeAndId(BlogQuery blogQuery);
+    List<Blog> selectByTitleAndTypeAndId(@Param("blogQuery") BlogQuery blog);
 }

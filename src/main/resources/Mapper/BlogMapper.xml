@@ -47,13 +47,13 @@
     <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultType="com.hantao.pojo.Blog">
         SELECT
         b.*,t.name typeName
-        from blog b, type t
+        from blog.blog b, blog.type t
         where b.type_id=t.id
         <if test="title!=null and title!='' ">
             and title LIKE concat(concat('%',#{title,jdbcType=VARCHAR}),'%')
         </if>
         <if test="typeId!=null">
-            and type_id LIKE concat(concat('%',#{type,jdbcType=BIGINT}),'%')
+            and type_id LIKE concat(concat('%',#{typeId,jdbcType=BIGINT}),'%')
         </if>
         <if test="recommend==true">
             and recommend=#{recommend,jdbcType=BIT}
