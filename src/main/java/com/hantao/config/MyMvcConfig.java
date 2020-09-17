@@ -8,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,11 +23,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyMvcConfig implements WebMvcConfigurer {
 
 
+    //解决跨域问题，前后端分离，vue
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("Get", "POST", "HEAD", "PUT", "DELETE", "OPTIONS")
+                .allowCredentials(true)
+                .maxAge(3600)
+                .allowedHeaders("*");
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns( "/admin", "/admin/login","/css/**", "/img/**", "/js/**");
+                .excludePathPatterns( "/admin", "/admin/login","/css/**", "/img/**", "/js/**", "/test/type");
     }
 
     //@Override
@@ -40,16 +52,4 @@ public class MyMvcConfig implements WebMvcConfigurer {
     //    (reg
     //}
 
-    @Bean
-    public PaginationInnerInterceptor PaginationInnerInterceptor(){
-
-        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
-
-        // 设置最大单页限制数量，默认 500 条，-1 不受限制
-        paginationInnerInterceptor.setMaxLimit((long) 3);
-        //
-        //PaginationInnerInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
-
-        return paginationInnerInterceptor;
-    }
 }

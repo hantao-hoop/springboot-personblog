@@ -3,12 +3,12 @@ package com.hantao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hantao.pojo.Blog;
 import com.hantao.pojo.Tag;
-import com.hantao.pojo.Type;
 import com.hantao.pojo.vo.BlogQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -20,13 +20,15 @@ import java.util.List;
 @Repository
 public interface BlogMapper extends BaseMapper<Blog> {
 
-    int insertBlog(String name);
+    int saveBlog(Blog blog);
 
-    Tag selectByName(String name);
+    Blog selectByName(String name);
 
     int updateBlog(Blog blog);
 
-    Tag selectById(Long id);
+    Long getNew();
+
+    Blog selectById(Long id);
 
     List<Blog> selectAll();
 

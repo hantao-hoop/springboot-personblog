@@ -21,6 +21,10 @@ public interface TagService {
     //根据Tag名查询
     Tag selectByName(String name);
 
+    List<Tag> selectList();
+
+    //根据id集合查询
+    List<Tag> listTag(String ids);
 
     //根据id修改Tag
     int updateTag(Tag tag);

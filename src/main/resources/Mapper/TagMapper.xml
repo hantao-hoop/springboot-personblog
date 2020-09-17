@@ -29,4 +29,11 @@
     <select id="selectAll" resultMap="ResultMap">
         select * from blog.tag
     </select>
+
+    <select id="selectWithParams" parameterType="list" resultMap="com.hantao.mapper.BlogMapper.ResultMap">
+        select * from tag where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

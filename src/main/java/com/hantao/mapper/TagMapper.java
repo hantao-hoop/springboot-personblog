@@ -3,6 +3,7 @@ package com.hantao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hantao.pojo.Tag;
 import org.apache.ibatis.annotations.Mapper;
+import org.omg.PortableInterceptor.LOCATION_FORWARD;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface TagMapper extends BaseMapper<Tag> {
     Tag selectById(Long id);
 
     List<Tag> selectAll();
+
+    List<Tag> selectWithParams(List<Long> list);
 }

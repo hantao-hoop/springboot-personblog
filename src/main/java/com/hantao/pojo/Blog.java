@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,19 +24,29 @@ public class Blog {
     @GeneratedValue
     private Long id;
     private String title;
+
+    @Transient
+    private String tagIds;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;
-    private String firePicture;
+    private String firstPicture;
     private String flag;
     private Integer views;
     private boolean appreciation;
+    private String description;
     private boolean shareStatement;
     private boolean commentabled;
     private boolean published;
     private boolean recommend;
+    private Long typeId;
+    private Long userId;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creatTime;
+    private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
 
     @ManyToOne
     private Type type;
@@ -49,4 +59,26 @@ public class Blog {
 
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
+
+    public void init(){
+        this.tagIds = tagsToIds(this.getTags());
+    }
+
+    private String tagsToIds(List<Tag> tags){
+        if (!tags.isEmpty()){
+            StringBuffer ids = new StringBuffer();
+            Boolean flag = false;
+            for (Tag tag : tags){
+                if (flag){
+                    ids.append(",");
+                }else {
+                    flag = true;
+                }
+                ids.append(tag.getId());
+            }
+            return ids.toString();
+        }else {
+            return tagIds;
+        }
+    }
 }

@@ -59,3 +59,5 @@ pagehelper:
   auto-dialect: mysql
   reasonable: true
   close-conn: false
+server:
+  port: 8081

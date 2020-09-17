@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantao.mapper.BlogTagMapper">
+
+    <resultMap id="BaseResultMap" type="com.hantao.pojo.BlogTags">
+        <result column="blogs_id" jdbcType="BIGINT" property="blogsId" />
+        <result column="tags_id" jdbcType="BIGINT" property="tagsId" />
+    </resultMap>
+
+    <!--<insert id="insert" parameterType="com.hantao.mapper.BlogTagMapper">-->
+    <!--insert into blog_tags (blogs_id, tags_id)-->
+    <!--values (#{blogsId,jdbcType=BIGINT}, #{tagsId,jdbcType=BIGINT})-->
+    <!--</insert>-->
+    <delete id="delect"></delete>
+    <select id="selectByBlogsId" resultType="java.lang.Long">
+        select tags_id from blog_tags where blogs_id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.hantao.mapper.BlogTagMapper">
+        insert into blog_tags
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogsId != null">
+                blogs_id,
+            </if>
+            <if test="tagsId != null">
+                tags_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blogsId != null">
+                #{blogsId,jdbcType=BIGINT},
+            </if>
+            <if test="tagsId != null">
+                #{tagsId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>

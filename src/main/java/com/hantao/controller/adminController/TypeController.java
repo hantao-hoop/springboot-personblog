@@ -20,7 +20,7 @@ import java.util.List;
  * @DATE: 2020/9/1
  * @description:
  */
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class TypeController {
 
@@ -28,7 +28,7 @@ public class TypeController {
     private TypeServiceImpl typeService;
 
     @GetMapping("/types")
-    public String type(Model model,
+    public List<Type> type(Model model,
                        @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum){
 
         //Page<Type> curPage = new Page<>(1,2);
@@ -43,7 +43,7 @@ public class TypeController {
 
         PageHelper.clearPage();
 
-        return "admin/types";
+        return typeService.findAllUserByPage(pageNum,5);
     }
 
     @RequestMapping("/types/input")

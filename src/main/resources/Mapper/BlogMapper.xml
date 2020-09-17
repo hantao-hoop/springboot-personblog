@@ -5,7 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="content" jdbcType="TIMESTAMP" property="content" />
-        <result column="fire_picture" jdbcType="VARCHAR" property="firePicture" />
+        <result column="first_picture" jdbcType="VARCHAR" property="firstPicture" />
         <result column="flag" jdbcType="VARCHAR" property="flag" />
         <result column="views" jdbcType="INTEGER" property="views" />
         <result column="appreciation" jdbcType="BOOLEAN" property="appreciation" />
@@ -13,14 +13,15 @@
         <result column="published" jdbcType="BOOLEAN" property="published" />
         <result column="commentabled" javaType="BOOLEAN" property="commentabled"/>
         <result column="recommend" javaType="BOOLEAN" property="recommend"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="creatTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+
         <result column="type_id" jdbcType="BIGINT" property="typeId"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
     </resultMap>
 
 
-    <resultMap extends="ResultMap" id="ResultMapWithBlog" type="com.hantao.pojo.Blog">
+    <resultMap extends="ResultMap" id="ResultMapWithBlogs" type="com.hantao.pojo.Blog">
 
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
 
@@ -37,14 +38,169 @@
             <result column="Unickname" jdbcType="VARCHAR" property="nickname"/>
         </association>
 
+        <!--关联Tags-->
+        <collection property="tags" ofType="com.hantao.pojo.Tag">
+            <id column="tagId" jdbcType="BIGINT" property="id"/>
+            <result column="tagName" jdbcType="VARCHAR" property="name"/>
+        </collection>
+
     </resultMap>
 
-    <insert id="insertBlog"></insert>
-    <update id="updateBlog"></update>
-    <select id="selectByName" resultType="com.hantao.pojo.Tag"></select>
-    <select id="selectById" resultType="com.hantao.pojo.Tag"></select>
+    <insert id="saveBlog" parameterType="com.hantao.pojo.Blog">
+
+        insert into blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appreciation != null">
+                appreciation,
+            </if>
+            <if test="commentabled != null">
+                commentabled,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="firstPicture != null">
+                first_picture,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="published != null">
+                published,
+            </if>
+            <if test="recommend != null">
+                recommend,
+            </if>
+            <if test="shareStatement != null">
+                share_statement,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appreciation != null">
+                #{appreciation,jdbcType=BIT},
+            </if>
+            <if test="commentabled != null">
+                #{commentabled,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="firstPicture != null">
+                #{firstPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="published != null">
+                #{published,jdbcType=BIT},
+            </if>
+            <if test="recommend != null">
+                #{recommend,jdbcType=BIT},
+            </if>
+            <if test="shareStatement != null">
+                #{shareStatement,jdbcType=BIT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="views != null">
+                #{views,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateBlog">
+        update blog
+        <set>
+            <if test="appreciation != null">
+                appreciation = #{appreciation,jdbcType=BIT},
+            </if>
+            <if test="commentabled != null">
+                commentabled = #{commentabled,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="firstPicture != null">
+                first_picture = #{firstPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="published != null">
+                published = #{published,jdbcType=BIT},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=BIT},
+            </if>
+            <if test="shareStatement != null">
+                share_statement = #{shareStatement,jdbcType=BIT},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="views != null">
+                views = #{views,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByName" resultType="com.hantao.pojo.Blog"></select>
+    <select id="selectById" parameterType="LONG" resultType="com.hantao.pojo.Blog">
+        select * from blog WHERE id = #{id};
+    </select>
     <select id="selectAll" resultType="com.hantao.pojo.Blog"></select>
-    <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultType="com.hantao.pojo.Blog">
+    <select id="selectByTitleAndTypeAndId" parameterType="com.hantao.pojo.vo.BlogQuery" resultMap="ResultMapWithBlogs">
         SELECT
         b.*,t.name typeName
         from blog.blog b, blog.type t
@@ -58,5 +214,8 @@
         <if test="recommend==true">
             and recommend=#{recommend,jdbcType=BIT}
         </if>
+    </select>
+    <select id="getNew" resultType="java.lang.Long">
+        select max(id) from blog.blog
     </select>
 </mapper>

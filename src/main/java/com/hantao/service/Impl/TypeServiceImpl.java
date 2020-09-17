@@ -103,5 +103,4 @@ public class TypeServiceImpl implements TypeService{
         return pageInfo;
     }
 
-
 }

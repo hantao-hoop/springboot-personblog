@@ -2,6 +2,7 @@ package com.hantao.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hantao.pojo.Blog;
+import com.hantao.pojo.Tag;
 import com.hantao.pojo.vo.BlogQuery;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface BlogService {
 
     //保存博客
-    int saveBlog(String name);
+    int saveBlog(Blog blog);
 
     //根据id查询博客
     Blog selectById(Long id);
@@ -22,6 +23,7 @@ public interface BlogService {
     //根据类型名查询
     Blog selectByName(String name);
 
+    Long getNew();
 
     //根据id修改
     int updateBlog(Blog blog);
